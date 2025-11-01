@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WENP – When Pepe?</title>
-  <meta name="description" content="WENP is a PRC20-style token on the Pepecoin network with a fixed 42,070,000 supply, public treasury wallet and transparent orderbook listings on Nintondo." />
+  <title>WENP – Fuel the frog. Reach the moon.</title>
+  <meta name="description" content="WENP is a Pepecoin-native meme token with a fixed 42,070,000 supply, transparent founder allocation, and a community-first distribution model. Fuel the frog. Reach the moon." />
   <link rel="icon" href="wenp-logo.png" />
   <style>
     :root {
@@ -16,8 +16,6 @@
       --orange: #ff7f32;
       --text: #e5e7eb;
       --muted: #9ca3af;
-      --radius-lg: 1.25rem;
-      --radius-sm: 0.65rem;
     }
     * { box-sizing: border-box; }
     body {
@@ -61,6 +59,13 @@
       font-weight: 700;
       color: #070b0a;
       border: 2.5px solid rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+    }
+    .brand-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 999px;
     }
     nav {
       display: flex;
@@ -98,6 +103,16 @@
       font-weight: 700;
       line-height: 1.03;
       margin-bottom: .55rem;
+    }
+    .hero-subtag {
+      font-size: .9rem;
+      color: rgba(229,231,235,.75);
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, rgba(22,195,94,1) 0%, rgba(255,127,50,1) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 600;
     }
     .pill {
       display: inline-flex;
@@ -175,10 +190,6 @@
     .value {
       font-size: 1.1rem;
       font-weight: 700;
-    }
-    .launch-notes li {
-      margin-bottom: .35rem;
-      font-size: .78rem;
     }
     .distribution-wrap {
       display: grid;
@@ -293,6 +304,7 @@
       gap: 1rem;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
     .badge-verify {
       display: inline-flex;
@@ -318,7 +330,9 @@
 <header>
   <div class="topbar">
     <div class="brand">
-      <div class="brand-icon">W</div>
+      <div class="brand-icon">
+        <img src="wenp-logo.png" alt="WENP">
+      </div>
       <div>
         <div style="font-weight:600;">WENP</div>
         <div style="font-size:.65rem; color:rgba(229,231,235,.4)">When Pepe?</div>
@@ -338,17 +352,17 @@
 <section class="hero" id="what">
   <div>
     <div class="pill">Pepecoin chain · PRC20-style</div>
-    <h1 class="hero-title">When Pepe? <span style="color:var(--orange)">Now.</span></h1>
+    <h1 class="hero-title">When Pepe? Now.</h1>
+    <div class="hero-subtag">Fuel the frog. Reach the moon.</div>
     <p style="color:rgba(229,231,235,.62); max-width: 530px; margin-bottom:1rem;">
-      WENP is a fixed-supply meme utility built directly on the Pepecoin network.  
-      Orders are listed in small, transparent batches so everyone can see what’s circulating.
+      WENP is a fixed-supply meme utility built directly on the Pepecoin network. Orders are listed in small, transparent batches so everyone can see what’s actually circulating.
     </p>
-    <div style="display:flex; gap:.7rem; align-items:center;">
+    <div style="display:flex; gap:.7rem; align-items:center; flex-wrap:wrap;">
       <a class="btn-primary" href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer">Get Pepecoin</a>
       <a href="#how" style="font-size:.8rem; opacity:.75;">How do I buy WENP?</a>
     </div>
     <p style="font-size:.73rem; color:rgba(229,231,235,.32); margin-top:.75rem;">
-      You can buy PEPE directly on <a href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer" style="color:rgba(255,173,124,.9)">pepecoin.org</a> or on one of the listed exchanges (MEXC, CoinEx, XT, AscendEX, Dex-Trade, StakeCube). Then swap / trade for WENP on Nintondo.
+      Buy PEPE on <a href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer" style="color:rgba(255,173,124,.9)">pepecoin.org</a> or from listed exchanges (MEXC, CoinEx, XT, AscendEX, Dex-Trade, StakeCube), then trade WENP on Nintondo.
     </p>
   </div>
 
@@ -366,12 +380,11 @@
       <span class="stat-label">Founder allocation</span>
       <span>10,040,000 <span class="badge-orange" style="background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.32);color:#e5ffe8;">23.9%</span></span>
     </div>
-    <div class="stat-row">
-      <span class="stat-label">Community / OG drops</span>
-      <span>3 × 1M wallets</span>
-    </div>
+    <p style="font-size:.7rem; color:rgba(229,231,235,.6); margin-top:.5rem;">
+      The founder allocation will gradually taper to <strong>15% or lower</strong> as the community accumulates the majority of circulating WENP.
+    </p>
     <p style="font-size:.68rem; color:rgba(229,231,235,.35); margin-top:.5rem;">
-      Last verified on Nintondo explorer at block <a href="https://nintondo.io/pepe/mainnet/explorer/tokens/WENP" target="_blank" rel="noopener noreferrer" style="color:rgba(255,175,125,.9)">762383</a>.
+      On-chain source: <a href="https://nintondo.io/pepe/mainnet/explorer/tokens/WENP" target="_blank" rel="noopener noreferrer" style="color:rgba(255,175,125,.9)">Nintondo Explorer</a>
     </p>
   </div>
 </section>
@@ -379,8 +392,7 @@
 <section id="tokenomics">
   <h2 class="section-title">Tokenomics</h2>
   <p style="max-width:530px; color:rgba(229,231,235,.55); margin-bottom:1.25rem;">
-    Fixed supply, visible founder wallet, and a separate liquidity treasury to support orderbook growth.
-    Base market ratio is designed to start at <strong>1 PEPE ≈ 10 WENP</strong> and adjust with demand.
+    Fixed supply, visible founder wallet, and a separate liquidity treasury to support orderbook growth. Base market ratio starts at <strong>1 PEPE ≈ 10 WENP</strong> and can adjust as community demand increases.
   </p>
   <div class="tokenomics-grid">
     <div class="card">
@@ -394,23 +406,23 @@
       <p style="margin-bottom:.5rem;">1 PEPE ≈ 10 WENP (starter ratio for listings)</p>
 
       <span class="small-label">Circulating via listings</span>
-      <p style="margin-bottom:0;">Released from liquidity treasury in 1,000 WENP lots.</p>
+      <p style="margin-bottom:0;">Released from liquidity treasury in 1,000 WENP lots to keep the book transparent.</p>
 
       <div class="badge-verify">
         <span style="width:8px; height:8px; background:#22c55e; border-radius:999px;"></span>
-        Explorer verified @ block 762383
+        Explorer verified
         <a href="https://nintondo.io/pepe/mainnet/explorer/tokens/WENP" target="_blank" rel="noopener noreferrer" style="color:#fff; text-decoration:underline; font-weight:500;">View</a>
       </div>
     </div>
-    <div class="card launch-notes">
+    <div class="card">
       <h3 style="margin:0 0 .55rem; font-size:.9rem;">Launch notes</h3>
-      <ul style="padding-left:1.1rem; margin:0 0 .65rem;">
-        <li>Orders will be posted in small increments (1,000 WENP) to keep the orderbook transparent.</li>
-        <li>Founder allocation (10M) is separate from the liquidity treasury (29M).</li>
-        <li>All wallets are visible on Nintondo for anyone to audit.</li>
+      <ul style="padding-left:1.1rem; margin:0 0 .65rem; font-size:.78rem;">
+        <li>Orders posted in small increments (1,000 WENP) during inital offering.</li>
+        <li>Founder wallet (10.04M) is separate from treasury wallet (29.01M).</li>
+        <li>Community wallets (3 × 1M) were seeded to large Pepcoin holders to decentralize supply.</li>
       </ul>
-      <p style="font-size:.68rem; color:rgba(229,231,235,.35);">
-        Update this section whenever you move treasury or add liquidity.
+      <p style="font-size:.7rem; color:rgba(229,231,235,.5); margin-top:.75rem;">
+        As holders buy and trade more WENP, community share increases and founder share naturally declines toward 15%.
       </p>
     </div>
   </div>
@@ -419,7 +431,7 @@
 <section id="distribution">
   <h2 class="section-title">WENP Distribution</h2>
   <p style="color:rgba(229,231,235,.55); margin-bottom:1.1rem;">
-    This mirrors the current on-chain state in Nintondo right now. If you send more to community wallets, update the percentages below.
+    This reflects the current on-chain state in Nintondo. Community growth over time is intentional — WENP is designed to migrate control to active holders.
   </p>
   <div class="distribution-wrap">
     <div class="chart-box">
@@ -432,8 +444,11 @@
         <li><span class="dot" style="background:#087443;"></span> <strong>Community / Pepcoin OGs</strong> – 3 wallets @ 1M → 7.1%</li>
         <li><span class="dot" style="background:#cbd5f5;"></span> <strong>Utility / misc.</strong> – ~11K WENP (0.03%)</li>
       </ul>
-      <p style="font-size:.7rem; color:rgba(229,231,235,.35); margin-top:.7rem;">
-        On-chain source: <a href="https://nintondo.io/pepe/mainnet/explorer/tokens/WENP" target="_blank" rel="noopener noreferrer">Nintondo WENP token page</a>
+      <p style="font-size:.75rem; color:rgba(229,231,235,.6); margin-top:1rem;">
+        <strong>Community direction:</strong> as WENP is accumulated by active traders and Pepcoin holders, the community becomes the majority holder and primary driver of listings, incentives, and future treasury proposals.
+      </p>
+      <p style="font-size:.7rem; color:rgba(229,231,235,.35); margin-top:.5rem;">
+        Source: <a href="https://nintondo.io/pepe/mainnet/explorer/tokens/WENP" target="_blank" rel="noopener noreferrer">Nintondo WENP token page</a>
       </p>
     </div>
   </div>
@@ -459,9 +474,9 @@
     </div>
     <div class="step">
       <div class="step-tag">Step 2 · connect Nintondo</div>
-      <div class="step-title">Open Nintondo marketplace</div>
+      <div class="step-title">Open WENP market</div>
       <p style="font-size:.78rem; color:rgba(229,231,235,.6);">
-        Visit the WENP market on Nintondo and make sure you're on the <strong>Pepecoin mainnet</strong>.
+        Visit the WENP market on Nintondo and make sure you're on Pepecoin mainnet.
       </p>
       <p style="margin-bottom:.4rem;">
         <a href="https://nintondo.io/pepe/mainnet/market/tokens/WENP" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-block; margin-top:.45rem; font-size:.73rem;">Open WENP market</a>
@@ -471,7 +486,7 @@
       <div class="step-tag">Step 3 · buy small lots</div>
       <div class="step-title">1 PEPE ≈ 10 WENP</div>
       <p style="font-size:.78rem; color:rgba(229,231,235,.6);">
-        Orders are usually posted in 1,000 WENP chunks to keep the orderbook clean and fair. Grab as many as you need.
+        Orders are usually posted in 1,000 WENP chunks to keep the orderbook fair and readable.
       </p>
     </div>
   </div>
@@ -480,7 +495,7 @@
 <section id="wallets" style="margin-top:2.5rem;">
   <h2 class="section-title">Compatible wallets &amp; exchanges</h2>
   <p style="color:rgba(229,231,235,.55); max-width:700px;">
-    WENP lives on the Pepecoin chain, so use Pepecoin-compatible tooling. These links mirror what’s published on <a href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer">pepecoin.org</a>. :contentReference[oaicite:1]{index=1}
+    WENP lives on the Pepecoin chain, so use Pepecoin-compatible tooling. These match what’s published on pepecoin.org.
   </p>
   <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(245px,1fr)); gap:1rem; margin-top:1rem;">
     <div class="card">
@@ -504,7 +519,7 @@
         <li><a href="https://ascendex.com/" target="_blank" rel="noopener noreferrer">AscendEX</a></li>
       </ul>
       <p style="font-size:.67rem; color:rgba(229,231,235,.35); margin-top:.5rem;">
-        Always fund with PEPE first → then trade for WENP on Nintondo.
+        Fund with PEPE first → then buy WENP on Nintondo.
       </p>
     </div>
   </div>
@@ -513,7 +528,7 @@
 <section id="community" style="margin-top:2.5rem;">
   <h2 class="section-title">Community &amp; Links</h2>
   <p style="color:rgba(229,231,235,.55); max-width:650px;">
-    Stay informed on Pepcoin ecosystem updates, WENP treasury moves, and new markets. 
+    Stay informed on Pepecoin ecosystem updates, WENP treasury movements, and new markets. These are the official touchpoints right now.
   </p>
   <div class="community-grid">
     <a class="community-card" href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer">
@@ -542,10 +557,15 @@
 
 <footer>
   <div class="footer-inner">
-    <div>© 2025 WENP. Community-run Pepecoin token.</div>
-    <div style="display:flex; gap:.65rem;">
+    <div>
+      © 2025 WENP. Community-run Pepecoin token. Fuel the frog. Reach the moon.
+      <div style="font-size:.63rem; color:rgba(229,231,235,.32); margin-top:.35rem;">
+        WENP operates transparently on the Pepecoin network — community holders shape its trajectory.
+      </div>
+    </div>
+    <div style="display:flex; gap:.65rem; flex-wrap:wrap;">
       <a href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer">Pepecoin.org</a>
-      <a href="https://github.com/josephhale1986/wenp-site" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="https://nintondo.io/pepe/mainnet/explorer/tokens/WENP" target="_blank" rel="noopener noreferrer">Explorer</a>
     </div>
   </div>
@@ -554,3 +574,4 @@
 </body>
 </html>
 
+ 
