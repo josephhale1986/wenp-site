@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WENP – When Pepe?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050b0c;
+      --bg-soft: rgba(13, 22, 25, 0.7);
+      --card: rgba(9, 18, 20, 0.8);
+      --accent: #35bb5a;
+      --accent-soft: rgba(53, 187, 90, 0.12);
+      --text: #eef6f2;
+      --muted: #94a9a1;
+      --border: rgba(255, 255, 255, 0.04);
+      --orange: #ff9f43;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0e1f23 0%, #050b0c 55%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(5, 11, 12, 0.75);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.02);
+    }
+    .nav {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1.5rem;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .logo-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 9999px;
+      background: radial-gradient(circle, #43d46e 0%, #1d5b38 42%, #050b0c 100%);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .logo-circle img {
+      width: 120%;
+      height: auto;
+      object-fit: cover;
+    }
+    .brand-title {
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.15rem;
+      font-size: .9rem;
+      color: var(--muted);
+    }
+    .nav-links a:hover {
+      color: var(--text);
+    }
+    .nav-cta {
+      background: var(--accent);
+      color: #021212;
+      padding: .45rem .9rem;
+      border-radius: .75rem;
+      font-weight: 600;
+      font-size: .82rem;
+    }
+    /* Hero */
+    .hero {
+      max-width: 1180px;
+      margin: 3.2rem auto 2.5rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    .hero-text h1 {
+      font-size: clamp(2.3rem, 4vw, 3rem);
+      letter-spacing: -.03em;
+      margin-bottom: .75rem;
+    }
+    .tagline {
+      background: rgba(53, 187, 90, 0.11);
+      display: inline-flex;
+      gap: .45rem;
+      align-items: center;
+      padding: .35rem .65rem;
+      border-radius: 9999px;
+      font-size: .7rem;
+      border: 1px solid rgba(53, 187, 90, 0.15);
+      margin-bottom: 1.2rem;
+      color: #d8fff1;
+    }
+    .hero p {
+      color: var(--muted);
+      max-width: 520px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: .85rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: linear-gradient(120deg, #35bb5a 0%, #78ffb2 100%);
+      color: #000;
+      padding: .7rem 1.2rem;
+      border-radius: .75rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-secondary {
+      background: rgba(4, 9, 10, 0.35);
+      border: 1px solid rgba(255,255,255,0.02);
+      color: var(--text);
+      padding: .7rem 1rem;
+      border-radius: .75rem;
+      font-weight: 500;
+    }
+    .hero-art {
+      background: radial-gradient(circle at top, rgba(53,187,90,0.12) 0%, rgba(5,11,12,0) 55%);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 1.5rem;
+      aspect-ratio: 4 / 3;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-art img {
+      width: 78%;
+      max-width: 380px;
+    }
+    .stat-pill {
+      position: absolute;
+      bottom: 1.3rem;
+      right: 1.3rem;
+      background: rgba(5,11,12,0.45);
+      border: 1px solid rgba(255,255,255,0.04);
+      padding: .5rem .75rem;
+      border-radius: .85rem;
+      font-size: .7rem;
+    }
+    /* Sections */
+    section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 0;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: .3rem;
+    }
+    .section-sub {
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+      max-width: 620px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.1rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.025);
+      border-radius: 1.1rem;
+      padding: 1.1rem 1.05rem 1.05rem;
+    }
+    .card-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: .85rem;
+      background: rgba(53, 187, 90, 0.14);
+      display: grid;
+      place-items: center;
+      margin-bottom: .6rem;
+      font-weight: 700;
+      font-size: .85rem;
+    }
+    /* Tokenomics */
+    .tokenomics-wrap {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 1.5rem;
+    }
+    .token-list {
+      display: flex;
+      flex-direction: column;
+      gap: .9rem;
+    }
+    .token-item {
+      background: rgba(4,9,10,0.4);
+      border: 1px solid rgba(255,255,255,0.02);
+      border-radius: .9rem;
+      padding: .6rem .75rem .55rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .badge {
+      background: rgba(255,159,67,0.13);
+      color: #ffcf95;
+      font-size: .65rem;
+      padding: .2rem .5rem;
+      border-radius: 9999px;
+    }
+    /* How to buy */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 9999px;
+      background: rgba(53,187,90,0.15);
+      border: 1px solid rgba(53,187,90,0.45);
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      margin-bottom: .55rem;
+    }
+    /* Footer */
+    footer {
+      margin-top: 3.5rem;
+      border-top: 1px solid rgba(255,255,255,0.03);
+      padding: 1.4rem 1.5rem 2.5rem;
+      text-align: center;
+      color: #6f8880;
+      font-size: .78rem;
+    }
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .tokenomics-wrap {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="nav-left">
+      <div class="logo-circle">
+        <!-- replace with your circle icon/logo -->
+        <!-- <img src="wenp-icon.png" alt="WENP" /> -->
+        <span>🚀</span>
+      </div>
+      <div>
+        <div class="brand-title">WENP</div>
+        <div style="font-size:.65rem; color:var(--muted); margin-top:-.2rem;">When Pepe?</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#what">What is WENP?</a>
+      <a href="#tokenomics">Tokenomics</a>
+      <a href="#how">How to Buy</a>
+      <a href="#community">Community</a>
+    </div>
+    <a class="nav-cta" href="https://nintondo.io/pepe/mainnet/market/tokens/WENP" target="_blank" rel="noreferrer">Buy on Nintondo</a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <div class="tagline">⏳ Pepcoin-native meme token</div>
+      <h1>WENP — the meme that rides Pepe to the moon.</h1>
+      <p>Built for the Pepcoin community. Clean branding, real chain, and a tokenomics model that rewards early believers.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="https://nintondo.io/pepe/mainnet/market/tokens/WENP" target="_blank" rel="noreferrer">Buy on Nintondo</a>
+        <a class="btn-secondary" href="https://nintondo.io/pepe/mainnet/explorer" target="_blank" rel="noreferrer">View on Explorer</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <!-- drop your main logo here -->
+      <!-- <img src="wenp-main.png" alt="WENP Logo"> -->
+      <img src="wenp-logo.png" alt="WENP">
+      <div class="stat-pill">
+        <div style="font-size:.6rem; color:var(--muted);">Current holders</div>
+        <div style="font-weight:600;">5 wallets</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS WENP -->
+  <section id="what">
+    <h2 class="section-title">What is WENP?</h2>
+    <p class="section-sub">WENP is a Pepcoin meme token answering the question “When Pepe?” — combining rocket memes, frog culture, and block-by-block momentum.</p>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">⏳</div>
+        <h3>Timing Meme</h3>
+        <p>WENP is built around anticipation — launches, airdrops, mints, and listings. Holders get first look.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🟢</div>
+        <h3>Pepcoin-Native</h3>
+        <p>Lives fully on the Pepcoin chain and trades on Nintondo. No bridged fakes.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💬</div>
+        <h3>Community Driven</h3>
+        <p>Memes, collabs, and future NFT drops similar to your Bali-or-Bust style artwork.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOKENOMICS -->
+  <section id="tokenomics">
+    <h2 class="section-title">Tokenomics</h2>
+    <p class="section-sub">Transparent, simple, meme-friendly. You said you wanted to hold ~10% — so let’s make it clear on the site.</p>
+    <div class="tokenomics-wrap">
+      <div>
+        <div class="token-list">
+          <div class="token-item">
+            <div>
+              <div style="font-weight:600;">Total Supply</div>
+              <div style="font-size:.75rem; color:var(--muted);">100,000,000 WENP (example)</div>
+            </div>
+            <div class="badge">fixed</div>
+          </div>
+          <div class="token-item">
+            <div>
+              <div style="font-weight:600;">Liquidity & market</div>
+              <div style="font-size:.75rem; color:var(--muted);">45% → Nintondo orderbooks, LP</div>
+            </div>
+          </div>
+          <div class="token-item">
+            <div>
+              <div style="font-weight:600;">Community & drops</div>
+              <div style="font-size:.75rem; color:var(--muted);">25% → memes, early WENP holders, collabs</div>
+            </div>
+          </div>
+          <div class="token-item">
+            <div>
+              <div style="font-weight:600;">Team / Creator</div>
+              <div style="font-size:.75rem; color:var(--muted);">10% → locked / vested</div>
+            </div>
+            <div style="font-size:.7rem; color:var(--muted);">visible on-chain</div>
+          </div>
+          <div class="token-item">
+            <div>
+              <div style="font-weight:600;">Treasury</div>
+              <div style="font-size:.75rem; color:var(--muted);">20% → future NFT, WENP Clock, rewards</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="background: rgba(4,9,10,0.35); border:1px solid rgba(255,255,255,0.015); border-radius:1.1rem; padding:1.05rem;">
+        <h3 style="margin-top:0;">Launch Notes</h3>
+        <p style="color:var(--muted); font-size:.87rem;">
+          • Listed on Nintondo @ ~1020 sat  
+          • Creator wallet: <code>P...</code>  
+          • Target: slow, healthy volume → not a single dump.
+        </p>
+        <p style="color:var(--muted); font-size:.78rem; margin-top:1rem;">
+          <strong>Tip:</strong> show this on the site so traders can verify supply before buying.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO BUY -->
+  <section id="how">
+    <h2 class="section-title">How to Buy WENP</h2>
+    <p class="section-sub">If you can buy PEPI or FROG on Nintondo, you can buy WENP. Same flow.</p>
+    <div class="steps">
+      <div class="card">
+        <div class="step-num">1</div>
+        <h3>Get Pepcoin (PEPE)</h3>
+        <p>Fund your Pepcoin wallet with a small amount for token cost + fee.</p>
+      </div>
+      <div class="card">
+        <div class="step-num">2</div>
+        <h3>Open Nintondo</h3>
+        <p>Go to the WENP token page and connect your wallet.</p>
+      </div>
+      <div class="card">
+        <div class="step-num">3</div>
+        <h3>Place your order</h3>
+        <p>Buy from the orderbook or set a limit order at your price.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY -->
+  <section id="community">
+    <h2 class="section-title">Community & Links</h2>
+    <p class="section-sub">Join to get airdrops, meme drops, and the WENP Clock updates.</p>
+    <div class="cards-grid">
+      <a class="card" href="#" target="_blank" rel="noreferrer">
+        <h3>Telegram</h3>
+        <p>Live chat, announcements, and listings.</p>
+      </a>
+      <a class="card" href="#" target="_blank" rel="noreferrer">
+        <h3>X / Twitter</h3>
+        <p>Charts, floor updates, and memes.</p>
+      </a>
+      <a class="card" href="https://nintondo.io/pepe/mainnet/market/tokens/WENP" target="_blank" rel="noreferrer">
+        <h3>Nintondo</h3>
+        <p>Buy, sell, and watch the orderbook.</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  WENP is a community-driven meme token on the Pepcoin blockchain. Always verify contract / inscription before buying.
+</footer>
+
+</body>
+</html>
