@@ -4,32 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WENP – When Pepe?</title>
-  <meta name="description" content="WENP is a Pepcoin-native meme token answering the question ‘When Pepe?’ — transparent supply, on-chain distribution, and community allocations.">
-  <meta property="og:title" content="WENP — The Meme That Rides Pepe to the Moon">
-  <meta property="og:description" content="Transparent supply: 42.07M WENP. 68.9% treasury/liquidity, 23.9% founder, 7.1% community. Live on Nintondo.">
-  <meta property="og:url" content="https://wenp.site/">
-  <meta property="og:type" content="website">
-  <link rel="icon" href="wenp-logo.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="WENP is a PRC20-style token on the Pepecoin network with a fixed 42,070,000 supply, public treasury wallet and transparent orderbook listings on Nintondo." />
+  <link rel="icon" href="wenp-logo.png" />
   <style>
     :root {
-      --bg: #050B0C;
-      --bg-soft: rgba(13, 22, 25, 0.7);
-      --card: rgba(9, 18, 20, 0.8);
-      --accent: #35BB5A;       /* WENP green */
-      --accent2: #D96A26;      /* burnt orange for treasury */
-      --accent3: #7DF5AB;      /* light green for community */
-      --text: #eef6f2;
-      --muted: #94a9a1;
-      --border: rgba(255, 255, 255, 0.04);
+      --bg: #0b1110;
+      --panel: rgba(10, 16, 14, 0.45);
+      --dark: #020403;
+      --green: #16a34a;
+      --bright-green: #22c55e;
+      --orange: #ff7f32;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --radius-lg: 1.25rem;
+      --radius-sm: 0.65rem;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #0e1f23 0%, #050b0c 55%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 10% 0%, #192824 0%, #0b1110 45%, #020403 100%);
       color: var(--text);
       line-height: 1.6;
     }
@@ -37,456 +31,524 @@
     header {
       position: sticky;
       top: 0;
-      z-index: 50;
-      background: rgba(5, 11, 12, 0.75);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.02);
+      z-index: 40;
+      backdrop-filter: blur(20px);
+      background: rgba(3, 6, 6, 0.22);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     }
-    .nav {
-      max-width: 1180px;
+    .topbar {
+      max-width: 1100px;
       margin: 0 auto;
       display: flex;
       align-items: center;
+      gap: 1.25rem;
+      padding: 0.85rem 1.25rem;
       justify-content: space-between;
-      padding: 0.6rem 1.5rem;
     }
-    .nav-left {
+    .brand {
       display: flex;
       align-items: center;
-      gap: .6rem;
+      gap: .7rem;
     }
-    .logo-circle {
-      width: 40px;
-      height: 40px;
+    .brand-icon {
+      width: 42px;
+      height: 42px;
       border-radius: 9999px;
-      background: radial-gradient(circle, #43d46e 0%, #1d5b38 42%, #050b0c 100%);
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-    }
-    .logo-circle img {
-      width: 120%;
-      height: auto;
-      object-fit: cover;
-    }
-    .brand-title {
+      background: radial-gradient(circle at 30% 30%, #22c55e 0%, #0c592c 80%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: 700;
-      letter-spacing: -.02em;
+      color: #070b0a;
+      border: 2.5px solid rgba(255, 255, 255, 0.12);
     }
-    .nav-links {
+    nav {
       display: flex;
-      gap: 1.15rem;
-      font-size: .9rem;
-      color: var(--muted);
+      gap: 1.1rem;
+      font-size: .87rem;
     }
-    .nav-links a:hover { color: var(--text); }
-    .nav-cta {
-      background: var(--accent2);
-      color: #021212;
-      padding: .45rem .9rem;
-      border-radius: .75rem;
-      font-weight: 600;
-      font-size: .82rem;
+    .nav-link {
+      opacity: .8;
+      cursor: pointer;
     }
-    /* Hero */
-    .hero {
-      max-width: 1180px;
-      margin: 3.2rem auto 2.5rem;
-      padding: 0 1.5rem;
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 2rem;
-      align-items: center;
-    }
-    .hero-text h1 {
-      font-size: clamp(2.3rem, 4vw, 3rem);
-      letter-spacing: -.03em;
-      margin-bottom: .75rem;
-    }
-    .tagline {
-      background: rgba(217, 106, 38, 0.11);
-      display: inline-flex;
-      gap: .45rem;
-      align-items: center;
-      padding: .35rem .65rem;
-      border-radius: 9999px;
-      font-size: .7rem;
-      border: 1px solid rgba(217, 106, 38, 0.23);
-      margin-bottom: 1.2rem;
-      color: #ffd9be;
-    }
-    .hero p { color: var(--muted); max-width: 520px; }
-    .hero-actions {
-      display: flex;
-      gap: .85rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
+    .nav-link:hover { opacity: 1; }
     .btn-primary {
-      background: linear-gradient(120deg, #35bb5a 0%, #78ffb2 100%);
-      color: #000;
-      padding: .7rem 1.2rem;
-      border-radius: .75rem;
+      background: linear-gradient(135deg, var(--orange), #ff9f58);
+      color: #061311;
+      padding: .45rem .95rem .5rem;
+      border-radius: 999px;
       font-weight: 600;
       border: none;
       cursor: pointer;
+      font-size: .85rem;
+      transition: transform .08s ease-out;
     }
-    .btn-secondary {
-      background: rgba(4, 9, 10, 0.35);
-      border: 1px solid rgba(255,255,255,0.02);
-      color: var(--text);
-      padding: .7rem 1rem;
-      border-radius: .75rem;
-      font-weight: 500;
-    }
-    .hero-art {
-      background: radial-gradient(circle at top, rgba(53,187,90,0.12) 0%, rgba(5,11,12,0) 55%);
-      border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 1.5rem;
-      aspect-ratio: 4 / 3;
+    .btn-primary:hover { transform: translateY(-1px); }
+    .hero {
+      max-width: 1100px;
+      margin: 3.35rem auto 2.25rem;
       display: grid;
-      place-items: center;
-      position: relative;
-      overflow: hidden;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 2.2rem;
+      padding: 0 1.25rem;
+      align-items: center;
     }
-    .hero-art img { width: 78%; max-width: 380px; }
-    .stat-pill {
-      position: absolute;
-      bottom: 1.3rem;
-      right: 1.3rem;
-      background: rgba(5,11,12,0.45);
-      border: 1px solid rgba(255,255,255,0.04);
-      padding: .5rem .75rem;
-      border-radius: .85rem;
+    .hero-title {
+      font-size: clamp(2.35rem, 4vw, 2.95rem);
+      font-weight: 700;
+      line-height: 1.03;
+      margin-bottom: .55rem;
+    }
+    .pill {
+      display: inline-flex;
+      gap: .4rem;
+      align-items: center;
+      background: rgba(22, 163, 74, .12);
+      border: 1px solid rgba(22, 163, 74, .22);
+      color: var(--bright-green);
+      padding: .15rem .6rem .2rem;
+      border-radius: 999px;
       font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .9rem;
+    }
+    .hero-panel {
+      background: radial-gradient(circle, rgba(255,127,50,.1) 0%, rgba(3,4,3,0) 55%), rgba(3,7,7,.32);
+      border: 1px solid rgba(255, 127, 50, .3);
+      border-radius: 1.3rem;
+      padding: 1.3rem 1.3rem 1rem;
+      box-shadow: 0 15px 55px rgba(0, 0, 0, .25);
+    }
+    .hero-panel-title {
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: rgba(229,231,235,.65);
+      margin-bottom: .5rem;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: .55rem;
+      font-size: .78rem;
+    }
+    .stat-label { color: rgba(229,231,235,.6); }
+    .badge-orange {
+      background: rgba(255, 127, 50, .14);
+      border: 1px solid rgba(255, 127, 50, .35);
+      color: #ffd7bd;
+      border-radius: 999px;
+      font-size: .6rem;
+      padding: .08rem .45rem .2rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
     }
     section {
-      max-width: 1180px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 2.5rem 1.5rem 0;
+      padding: 0 1.25rem;
     }
-    .section-title {
-      font-size: 1.5rem;
-      margin-bottom: .3rem;
+    h2.section-title {
+      font-size: 1.35rem;
+      margin: 2.6rem 0 .6rem;
     }
-    .section-sub {
-      color: var(--muted);
-      margin-bottom: 1.4rem;
-      max-width: 620px;
-    }
-    .cards-grid {
+    .tokenomics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.1rem;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 1.4rem;
     }
     .card {
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,0.025);
+      background: rgba(3,4,4,.27);
+      border: 1px solid rgba(255,255,255,.018);
       border-radius: 1.1rem;
-      padding: 1.1rem 1.05rem 1.05rem;
+      padding: 1.05rem 1.1rem 1rem;
     }
-    .card-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: .85rem;
-      background: rgba(53,187,90,0.14);
+    .small-label {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: rgba(229,231,235,.5);
+      margin-bottom: .1rem;
+      display: block;
+    }
+    .value {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .launch-notes li {
+      margin-bottom: .35rem;
+      font-size: .78rem;
+    }
+    .distribution-wrap {
+      display: grid;
+      grid-template-columns: 360px minmax(0,1fr);
+      gap: 1.3rem;
+      align-items: center;
+    }
+    .chart-box {
+      background: radial-gradient(circle, rgba(255,127,50,.12) 0%, rgba(3,4,3,0) 55%), rgba(3,8,7,.25);
+      border: 1px solid rgba(255,127,50,.28);
+      border-radius: 1.1rem;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pie {
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background:
+        conic-gradient(
+          #ff7f32 0deg 250deg,   /* treasury 68.9% */
+          #14833a 250deg 336deg, /* founder 23.9% */
+          #087443 336deg 354deg, /* community 7.1% */
+          #cbd5f5 354deg 360deg  /* misc */
+        );
+      position: relative;
+      box-shadow: 0 15px 45px rgba(0,0,0,.25);
+    }
+    .pie::after {
+      content: "WENP";
+      position: absolute;
+      inset: 28%;
+      background: rgba(5,9,9,.68);
+      border-radius: 50%;
       display: grid;
       place-items: center;
-      margin-bottom: .6rem;
-      font-weight: 700;
-      font-size: .85rem;
+      font-size: .7rem;
+      letter-spacing: .12em;
     }
-    .tokenomics-wrap {
+    .dist-list li {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      margin-bottom: .35rem;
+      font-size: .78rem;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+    }
+    .how-grid {
       display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 1rem;
     }
-    .token-list {
-      display: flex;
-      flex-direction: column;
-      gap: .9rem;
+    .step {
+      background: rgba(7,10,9,.25);
+      border: 1px solid rgba(255,127,50,.12);
+      border-radius: 1rem;
+      padding: .9rem .95rem .65rem;
     }
-    .token-item {
-      background: rgba(4,9,10,0.4);
-      border: 1px solid rgba(255,255,255,0.02);
-      border-radius: .9rem;
-      padding: .6rem .75rem .55rem;
+    .step-tag {
+      font-size: .65rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: rgba(229,231,235,.6);
+      margin-bottom: .35rem;
+    }
+    .step-title {
+      font-weight: 600;
+      margin-bottom: .25rem;
+    }
+    .community-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px,1fr));
+      gap: 1rem;
+      margin-top: .7rem;
+    }
+    .community-card {
+      background: rgba(6,10,10,.2);
+      border: 1px solid rgba(255,127,50,.05);
+      border-radius: 1rem;
+      padding: .75rem .8rem .6rem;
       display: flex;
+      gap: .65rem;
+      align-items: flex-start;
+    }
+    .circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+    footer {
+      border-top: 1px solid rgba(255,255,255,.03);
+      margin-top: 3.2rem;
+      background: rgba(3,5,4,.3);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.1rem 1.25rem 2.2rem;
+      font-size: .7rem;
+      color: rgba(229,231,235,.35);
+      display: flex;
+      gap: 1rem;
       justify-content: space-between;
       align-items: center;
     }
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 1rem;
-      margin-top: 1.2rem;
-    }
-    .step-num {
-      width: 32px;
-      height: 32px;
-      border-radius: 9999px;
-      background: rgba(53,187,90,0.15);
-      border: 1px solid rgba(53,187,90,0.45);
-      display: grid;
-      place-items: center;
-      font-weight: 600;
-      margin-bottom: .55rem;
-    }
-    footer {
-      margin-top: 3.5rem;
-      border-top: 1px solid rgba(255,255,255,0.03);
-      padding: 1.4rem 1.5rem 2.5rem;
-      text-align: center;
-      color: #6f8880;
-      font-size: .78rem;
+    .badge-verify {
+      display: inline-flex;
+      gap: .35rem;
+      align-items: center;
+      background: rgba(8,113,62,.12);
+      border: 1px solid rgba(8,113,62,.35);
+      border-radius: 999px;
+      padding: .18rem .6rem .25rem;
+      font-size: .67rem;
+      margin-top: .55rem;
     }
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; }
-      .tokenomics-wrap { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
+      .tokenomics-grid { grid-template-columns: 1fr; }
+      .distribution-wrap { grid-template-columns: 1fr; }
+      nav { display: none; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="nav">
-    <div class="nav-left">
-      <div class="logo-circle">
-        <!-- replace with your circle icon/logo -->
-        <!-- <img src="wenp-icon.png" alt="WENP" /> -->
-        <span>🚀</span>
-      </div>
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-icon">W</div>
       <div>
-        <div class="brand-title">WENP</div>
-        <div style="font-size:.65rem; color:var(--muted); margin-top:-.2rem;">When Pepe?</div>
+        <div style="font-weight:600;">WENP</div>
+        <div style="font-size:.65rem; color:rgba(229,231,235,.4)">When Pepe?</div>
       </div>
     </div>
-    <div class="nav-links">
-      <a href="#what">What is WENP?</a>
-      <a href="#tokenomics">Tokenomics</a>
-      <a href="#distribution">Distribution</a>
-      <a href="#how">How to Buy</a>
-      <a href="#community">Community</a>
-    </div>
-    <a class="nav-cta" href="https://nintondo.io/pepe/mainnet/market/tokens/WENP" target="_blank" rel="noreferrer">Buy on Nintondo</a>
+    <nav>
+      <a href="#what" class="nav-link">What is WENP?</a>
+      <a href="#tokenomics" class="nav-link">Tokenomics</a>
+      <a href="#distribution" class="nav-link">Distribution</a>
+      <a href="#how" class="nav-link">How to buy</a>
+      <a href="#community" class="nav-link">Community &amp; Links</a>
+    </nav>
+    <a class="btn-primary" href="https://nintondo.io/pepe/mainnet/market/tokens/WENP" target="_blank" rel="noopener noreferrer">Buy on Nintondo</a>
   </div>
 </header>
 
-<main>
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-text">
-      <div class="tagline">🔥 Pepcoin-native • Burnt orange & green</div>
-      <h1>WENP — the meme that rides Pepe to the moon.</h1>
-      <p>Transparent on-chain distribution, founder allocation under 25%, and a treasury dedicated to liquidity on Nintondo.</p>
-      <div class="hero-actions">
-        <a class="btn-primary" href="https://nintondo.io/pepe/mainnet/market/tokens/WENP" target="_blank" rel="noreferrer">Buy on Nintondo</a>
-        <a class="btn-secondary" href="https://nintondo.io/pepe/mainnet/explorer/tokens/WENP" target="_blank" rel="noreferrer">View on Explorer</a>
-      </div>
+<section class="hero" id="what">
+  <div>
+    <div class="pill">Pepecoin chain · PRC20-style</div>
+    <h1 class="hero-title">When Pepe? <span style="color:var(--orange)">Now.</span></h1>
+    <p style="color:rgba(229,231,235,.62); max-width: 530px; margin-bottom:1rem;">
+      WENP is a fixed-supply meme utility built directly on the Pepecoin network.  
+      Orders are listed in small, transparent batches so everyone can see what’s circulating.
+    </p>
+    <div style="display:flex; gap:.7rem; align-items:center;">
+      <a class="btn-primary" href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer">Get Pepecoin</a>
+      <a href="#how" style="font-size:.8rem; opacity:.75;">How do I buy WENP?</a>
     </div>
-    <div class="hero-art">
-      <!-- drop your main logo here -->
-      <!-- <img src="wenp-main.png" alt="WENP Logo"> -->
-      <img src="wenp-logo.png" alt="WENP">
-      <div class="stat-pill">
-        <div style="font-size:.6rem; color:var(--muted);">Current holders</div>
-        <div style="font-weight:600;">6 wallets</div>
-      </div>
-    </div>
-  </section>
+    <p style="font-size:.73rem; color:rgba(229,231,235,.32); margin-top:.75rem;">
+      You can buy PEPE directly on <a href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer" style="color:rgba(255,173,124,.9)">pepecoin.org</a> or on one of the listed exchanges (MEXC, CoinEx, XT, AscendEX, Dex-Trade, StakeCube). Then swap / trade for WENP on Nintondo.
+    </p>
+  </div>
 
-  <!-- WHAT IS WENP -->
-  <section id="what">
-    <h2 class="section-title">What is WENP?</h2>
-    <p class="section-sub">WENP is a Pepcoin meme token answering the question “When Pepe?” — combining rocket memes, frog culture and verifiable on-chain tokenomics.</p>
-    <div class="cards-grid">
-      <div class="card">
-        <div class="card-icon">⏳</div>
-        <h3>Timing Meme</h3>
-        <p>Built around anticipation — listings, mints and community events tied to block height.</p>
+  <div class="hero-panel">
+    <div class="hero-panel-title">Current Supply Snapshot</div>
+    <div class="stat-row">
+      <span class="stat-label">Total supply</span>
+      <span class="value">42,070,000 WENP</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">Treasury / liquidity reserve</span>
+      <span>29,010,000 <span class="badge-orange">68.9%</span></span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">Founder allocation</span>
+      <span>10,040,000 <span class="badge-orange" style="background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.32);color:#e5ffe8;">23.9%</span></span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">Community / OG drops</span>
+      <span>3 × 1M wallets</span>
+    </div>
+    <p style="font-size:.68rem; color:rgba(229,231,235,.35); margin-top:.5rem;">
+      Last verified on Nintondo explorer at block <a href="https://nintondo.io/pepe/mainnet/explorer/tokens/WENP" target="_blank" rel="noopener noreferrer" style="color:rgba(255,175,125,.9)">762383</a>.
+    </p>
+  </div>
+</section>
+
+<section id="tokenomics">
+  <h2 class="section-title">Tokenomics</h2>
+  <p style="max-width:530px; color:rgba(229,231,235,.55); margin-bottom:1.25rem;">
+    Fixed supply, visible founder wallet, and a separate liquidity treasury to support orderbook growth.
+    Base market ratio is designed to start at <strong>1 PEPE ≈ 10 WENP</strong> and adjust with demand.
+  </p>
+  <div class="tokenomics-grid">
+    <div class="card">
+      <span class="small-label">Total Supply</span>
+      <div class="value" style="display:flex; gap:.4rem; align-items:center;">
+        42,070,000 WENP <span class="badge-orange">fixed</span>
       </div>
-      <div class="card">
-        <div class="card-icon" style="background:rgba(217,106,38,0.15);">🟠</div>
-        <h3>Pepcoin-Native</h3>
-        <p>Fully on the Pepcoin chain, already live on Nintondo. Nothing bridged or faked.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">💬</div>
-        <h3>Community First</h3>
-        <p>3M WENP already seeded to early Pepcoin holders to decentralize supply.</p>
+      <div style="height:1px; background:rgba(229,231,235,.03); margin:1rem 0 .8rem;"></div>
+
+      <span class="small-label">Base market ratio</span>
+      <p style="margin-bottom:.5rem;">1 PEPE ≈ 10 WENP (starter ratio for listings)</p>
+
+      <span class="small-label">Circulating via listings</span>
+      <p style="margin-bottom:0;">Released from liquidity treasury in 1,000 WENP lots.</p>
+
+      <div class="badge-verify">
+        <span style="width:8px; height:8px; background:#22c55e; border-radius:999px;"></span>
+        Explorer verified @ block 762383
+        <a href="https://nintondo.io/pepe/mainnet/explorer/tokens/WENP" target="_blank" rel="noopener noreferrer" style="color:#fff; text-decoration:underline; font-weight:500;">View</a>
       </div>
     </div>
-  </section>
+    <div class="card launch-notes">
+      <h3 style="margin:0 0 .55rem; font-size:.9rem;">Launch notes</h3>
+      <ul style="padding-left:1.1rem; margin:0 0 .65rem;">
+        <li>Orders will be posted in small increments (1,000 WENP) to keep the orderbook transparent.</li>
+        <li>Founder allocation (10M) is separate from the liquidity treasury (29M).</li>
+        <li>All wallets are visible on Nintondo for anyone to audit.</li>
+      </ul>
+      <p style="font-size:.68rem; color:rgba(229,231,235,.35);">
+        Update this section whenever you move treasury or add liquidity.
+      </p>
+    </div>
+  </div>
+</section>
 
-  <!-- TOKENOMICS -->
-  <section id="tokenomics">
-    <h2 class="section-title" style="color:var(--accent2);">Tokenomics</h2>
-    <p class="section-sub">Fixed supply, visible founder wallet, and a large liquidity treasury to support orderbook growth.</p>
-    <div class="tokenomics-wrap">
+<section id="distribution">
+  <h2 class="section-title">WENP Distribution</h2>
+  <p style="color:rgba(229,231,235,.55); margin-bottom:1.1rem;">
+    This mirrors the current on-chain state in Nintondo right now. If you send more to community wallets, update the percentages below.
+  </p>
+  <div class="distribution-wrap">
+    <div class="chart-box">
+      <div class="pie" aria-label="WENP distribution pie chart"></div>
+    </div>
+    <div>
+      <ul class="dist-list">
+        <li><span class="dot" style="background:#ff7f32;"></span> <strong>Treasury / Liquidity</strong> – 29.01M WENP (68.9%)</li>
+        <li><span class="dot" style="background:#14833a;"></span> <strong>Founder allocation</strong> – 10.04M WENP (23.9%)</li>
+        <li><span class="dot" style="background:#087443;"></span> <strong>Community / Pepcoin OGs</strong> – 3 wallets @ 1M → 7.1%</li>
+        <li><span class="dot" style="background:#cbd5f5;"></span> <strong>Utility / misc.</strong> – ~11K WENP (0.03%)</li>
+      </ul>
+      <p style="font-size:.7rem; color:rgba(229,231,235,.35); margin-top:.7rem;">
+        On-chain source: <a href="https://nintondo.io/pepe/mainnet/explorer/tokens/WENP" target="_blank" rel="noopener noreferrer">Nintondo WENP token page</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <h2 class="section-title">How to Buy WENP</h2>
+  <div class="how-grid">
+    <div class="step">
+      <div class="step-tag">Step 1 · get pepecoin</div>
+      <div class="step-title">Buy PEPE on pepecoin.org</div>
+      <p style="font-size:.78rem; color:rgba(229,231,235,.6);">
+        Go to <a href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer" style="color:var(--orange)">pepecoin.org</a> and buy directly, or use one of the listed exchanges:
+      </p>
+      <ul style="margin:0; padding-left:1.05rem; font-size:.73rem;">
+        <li><a href="https://www.mexc.com/" target="_blank" rel="noopener noreferrer">MEXC</a></li>
+        <li><a href="https://www.coinex.com/" target="_blank" rel="noopener noreferrer">CoinEx</a></li>
+        <li><a href="https://stakecube.net/" target="_blank" rel="noopener noreferrer">StakeCube</a></li>
+        <li><a href="https://dex-trade.com/" target="_blank" rel="noopener noreferrer">Dex-Trade</a></li>
+        <li><a href="https://www.xt.com/en" target="_blank" rel="noopener noreferrer">XT.com</a></li>
+        <li><a href="https://ascendex.com/" target="_blank" rel="noopener noreferrer">AscendEX</a></li>
+      </ul>
+    </div>
+    <div class="step">
+      <div class="step-tag">Step 2 · connect Nintondo</div>
+      <div class="step-title">Open Nintondo marketplace</div>
+      <p style="font-size:.78rem; color:rgba(229,231,235,.6);">
+        Visit the WENP market on Nintondo and make sure you're on the <strong>Pepecoin mainnet</strong>.
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="https://nintondo.io/pepe/mainnet/market/tokens/WENP" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-block; margin-top:.45rem; font-size:.73rem;">Open WENP market</a>
+      </p>
+    </div>
+    <div class="step">
+      <div class="step-tag">Step 3 · buy small lots</div>
+      <div class="step-title">1 PEPE ≈ 10 WENP</div>
+      <p style="font-size:.78rem; color:rgba(229,231,235,.6);">
+        Orders are usually posted in 1,000 WENP chunks to keep the orderbook clean and fair. Grab as many as you need.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="wallets" style="margin-top:2.5rem;">
+  <h2 class="section-title">Compatible wallets &amp; exchanges</h2>
+  <p style="color:rgba(229,231,235,.55); max-width:700px;">
+    WENP lives on the Pepecoin chain, so use Pepecoin-compatible tooling. These links mirror what’s published on <a href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer">pepecoin.org</a>. :contentReference[oaicite:1]{index=1}
+  </p>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(245px,1fr)); gap:1rem; margin-top:1rem;">
+    <div class="card">
+      <h3 style="margin-top:0; font-size:.85rem;">Wallets</h3>
+      <ul style="list-style:none; padding:0; margin:0; font-size:.77rem;">
+        <li><a href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer">Pepecoin Core (official)</a></li>
+        <li><a href="https://www.coinomi.com/en/" target="_blank" rel="noopener noreferrer">Coinomi Wallet</a></li>
+        <li><a href="https://komodoplatform.com/en/wallet/" target="_blank" rel="noopener noreferrer">Komodo Wallet</a></li>
+        <li><a href="https://tangem.com/en/" target="_blank" rel="noopener noreferrer">Tangem (hardware)</a></li>
+        <li><a href="https://nintondo.io/" target="_blank" rel="noopener noreferrer">Nintondo wallet / extension</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0; font-size:.85rem;">Exchanges (PEPE)</h3>
+      <ul style="list-style:none; padding:0; margin:0; font-size:.77rem;">
+        <li><a href="https://www.mexc.com/" target="_blank" rel="noopener noreferrer">MEXC</a></li>
+        <li><a href="https://www.coinex.com/" target="_blank" rel="noopener noreferrer">CoinEx</a></li>
+        <li><a href="https://stakecube.net/" target="_blank" rel="noopener noreferrer">StakeCube</a></li>
+        <li><a href="https://dex-trade.com/" target="_blank" rel="noopener noreferrer">Dex-Trade</a></li>
+        <li><a href="https://www.xt.com/en" target="_blank" rel="noopener noreferrer">XT.com</a></li>
+        <li><a href="https://ascendex.com/" target="_blank" rel="noopener noreferrer">AscendEX</a></li>
+      </ul>
+      <p style="font-size:.67rem; color:rgba(229,231,235,.35); margin-top:.5rem;">
+        Always fund with PEPE first → then trade for WENP on Nintondo.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="community" style="margin-top:2.5rem;">
+  <h2 class="section-title">Community &amp; Links</h2>
+  <p style="color:rgba(229,231,235,.55); max-width:650px;">
+    Stay informed on Pepcoin ecosystem updates, WENP treasury moves, and new markets. 
+  </p>
+  <div class="community-grid">
+    <a class="community-card" href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer">
+      <div class="circle" style="background:rgba(38,188,89,.12); border:1px solid rgba(38,188,89,.35);">P</div>
       <div>
-        <div class="token-list">
-          <div class="token-item">
-            <div>
-              <div style="font-weight:600;">Total Supply</div>
-              <div style="font-size:.75rem; color:var(--muted);">42,070,000 WENP</div>
-            </div>
-            <div style="background:rgba(217,106,38,0.14);color:#ffd2b1;font-size:.65rem;padding:.25rem .55rem;border-radius:9999px;">fixed</div>
-          </div>
-          <div class="token-item">
-            <div>
-              <div style="font-weight:600;">Base market ratio</div>
-              <div style="font-size:.75rem; color:var(--muted);">1 PEPE ≈ 10 WENP (starter)</div>
-            </div>
-          </div>
-          <div class="token-item">
-            <div>
-              <div style="font-weight:600;">Circulating via listings</div>
-              <div style="font-size:.75rem; color:var(--muted);">from liquidity treasury</div>
-            </div>
-          </div>
-        </div>
+        <div style="font-weight:600;">Pepecoin.org</div>
+        <div style="font-size:.68rem; color:rgba(229,231,235,.45);">Official chain info, wallets, exchanges.</div>
       </div>
-      <div style="background: rgba(4,9,10,0.35); border:1px solid rgba(255,255,255,0.015); border-radius:1.1rem; padding:1.05rem;">
-        <h3 style="margin-top:0;">Launch Notes</h3>
-        <p style="color:var(--muted); font-size:.87rem;">
-          • Orders will be posted in small increments (1,000 WENP each) to keep the orderbook transparent. <br>
-          • Founder allocation is separate from liquidity treasury. <br>
-          • All wallets visible on Nintondo.
-        </p>
-        <p style="color:var(--muted); font-size:.78rem; margin-top:1rem;">
-          <strong>Last verified (manual):</strong> on Nintondo explorer at block <span style="color:#fff;">762383</span>. Update as you go.
-        </p>
+    </a>
+    <a class="community-card" href="https://www.reddit.com/r/pepecoin/" target="_blank" rel="noopener noreferrer">
+      <div class="circle" style="background:rgba(255,127,50,.13); border:1px solid rgba(255,127,50,.35);">R</div>
+      <div>
+        <div style="font-weight:600;">Reddit /r/pepecoin</div>
+        <div style="font-size:.68rem; color:rgba(229,231,235,.45);">Active community, announcements, memes.</div>
       </div>
-    </div>
-  </section>
-
-  <!-- DISTRIBUTION -->
-  <section id="distribution">
-    <h2 class="section-title" style="color:var(--accent2);">WENP Distribution</h2>
-    <p class="section-sub">This is the on-chain snapshot shown in your Nintondo explorer right now.</p>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:center;">
-      <!-- PIE CARD -->
-      <div style="background:rgba(5,11,12,0.45);border:1px solid rgba(255,255,255,0.02);border-radius:1.2rem;padding:1.1rem;display:grid;place-items:center;">
-        <svg viewBox="0 0 32 32" width="200" height="200">
-          <!-- Treasury 68.9% -->
-          <circle r="16" cx="16" cy="16"
-            fill="transparent"
-            stroke="#D96A26"
-            stroke-width="32"
-            stroke-dasharray="68.9 31.1"
-            transform="rotate(-90 16 16)" />
-          <!-- Founder 23.9% -->
-          <circle r="16" cx="16" cy="16"
-            fill="transparent"
-            stroke="#35BB5A"
-            stroke-width="32"
-            stroke-dasharray="23.9 76.1"
-            transform="rotate(156 16 16)" />
-          <!-- Community 7.1% -->
-          <circle r="16" cx="16" cy="16"
-            fill="transparent"
-            stroke="#7DF5AB"
-            stroke-width="32"
-            stroke-dasharray="7.1 92.9"
-            transform="rotate(242 16 16)" />
-        </svg>
-        <p style="color:#6f8880;font-size:.74rem;margin-top:.75rem;">Total: 42,070,000 WENP</p>
-        <p style="color:#6f8880;font-size:.68rem;margin-top:.25rem;">(update if you move treasury or add liquidity)</p>
+    </a>
+    <a class="community-card" href="https://nintondo.io/pepe/mainnet/market/tokens/WENP" target="_blank" rel="noopener noreferrer">
+      <div class="circle" style="background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.055);">N</div>
+      <div>
+        <div style="font-weight:600;">Nintondo – WENP</div>
+        <div style="font-size:.68rem; color:rgba(229,231,235,.45);">Live orderbook, current listings.</div>
       </div>
-
-      <!-- LEGEND -->
-      <div style="display:flex;flex-direction:column;gap:.7rem;">
-        <div style="display:flex;align-items:center;gap:.55rem;">
-          <span style="width:13px;height:13px;background:#D96A26;border-radius:3px;"></span>
-          <div>
-            <div style="font-weight:600;">Treasury / Liquidity Reserve</div>
-            <div style="color:#92a698;font-size:.78rem;">29.01M WENP • 68.9%</div>
-            <div style="color:#92a698;font-size:.7rem;">Used for listings, market depth, rewards.</div>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:.55rem;">
-          <span style="width:13px;height:13px;background:#35BB5A;border-radius:3px;"></span>
-          <div>
-            <div style="font-weight:600;">Founder Allocation</div>
-            <div style="color:#92a698;font-size:.78rem;">10.04M WENP • 23.9%</div>
-            <div style="color:#92a698;font-size:.7rem;">Personal founder wallet (visible on-chain).</div>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:.55rem;">
-          <span style="width:13px;height:13px;background:#7DF5AB;border-radius:3px;"></span>
-          <div>
-            <div style="font-weight:600;">Community / Pepcoin OGs</div>
-            <div style="color:#92a698;font-size:.78rem;">3.0M WENP • 7.1%</div>
-            <div style="color:#92a698;font-size:.7rem;">3 wallets @ 1M each to decentralize supply.</div>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:.55rem;">
-          <span style="width:13px;height:13px;background:#3d4a4a;border-radius:3px;"></span>
-          <div>
-            <div style="font-weight:600;">Utility / Misc.</div>
-            <div style="color:#92a698;font-size:.78rem;">~11K WENP • 0.03%</div>
-          </div>
-        </div>
-
-        <p style="color:#92a698;font-size:.7rem;margin-top:.5rem;">
-          ✅ Last verified on Nintondo: <strong>https://nintondo.io/pepe/mainnet/explorer/tokens/WENP</strong>  
-          (Edit this note whenever you redistribute.)
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW TO BUY -->
-  <section id="how">
-    <h2 class="section-title">How to Buy WENP</h2>
-    <p class="section-sub">Same flow as PEPI and FROG on Nintondo.</p>
-    <div class="steps">
-      <div class="card">
-        <div class="step-num">1</div>
-        <h3>Get Pepcoin (PEPE)</h3>
-        <p>Fund your Pepcoin wallet with enough for price + fee.</p>
-      </div>
-      <div class="card">
-        <div class="step-num">2</div>
-        <h3>Open Nintondo</h3>
-        <p>Go to the WENP token market page and connect your wallet.</p>
-      </div>
-      <div class="card">
-        <div class="step-num">3</div>
-        <h3>Place your order</h3>
-        <p>Buy from existing listings or post a bid at 1 PEPE = 10 WENP.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMMUNITY -->
-  <section id="community">
-    <h2 class="section-title">Community & Links</h2>
-    <p class="section-sub">Join to get airdrops, meme drops, and the WENP Clock.</p>
-    <div class="cards-grid">
-      <a class="card" href="#" target="_blank" rel="noreferrer">
-        <h3>Telegram</h3>
-        <p>Live updates, listings, and governance polls.</p>
-      </a>
-      <a class="card" href="#" target="_blank" rel="noreferrer">
-        <h3>X / Twitter</h3>
-        <p>Floor updates, memes, and holder shoutouts.</p>
-      </a>
-      <a class="card" href="https://nintondo.io/pepe/mainnet/market/tokens/WENP" target="_blank" rel="noreferrer">
-        <h3>Nintondo</h3>
-        <p>Trade WENP on Pepcoin’s main marketplace.</p>
-      </a>
-    </div>
-  </section>
-</main>
+    </a>
+  </div>
+</section>
 
 <footer>
-  WENP is a community-driven meme token on the Pepcoin blockchain. Always verify the token on Nintondo before buying.
+  <div class="footer-inner">
+    <div>© 2025 WENP. Community-run Pepecoin token.</div>
+    <div style="display:flex; gap:.65rem;">
+      <a href="https://pepecoin.org/" target="_blank" rel="noopener noreferrer">Pepecoin.org</a>
+      <a href="https://github.com/josephhale1986/wenp-site" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://nintondo.io/pepe/mainnet/explorer/tokens/WENP" target="_blank" rel="noopener noreferrer">Explorer</a>
+    </div>
+  </div>
 </footer>
 
 </body>
