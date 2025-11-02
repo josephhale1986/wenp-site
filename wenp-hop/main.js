@@ -52,7 +52,9 @@ function create() {
 
   // player
   this.player = this.physics.add.sprite(GAME_WIDTH / 2, GAME_HEIGHT - 48, "frog");
-  this.player.setCollideWorldBounds(true);
+this.player.setCollideWorldBounds(true);
+this.player.setScale(0.5);
+
 
   // controls
   this.cursors = this.input.keyboard.createCursorKeys();
@@ -70,6 +72,8 @@ function create() {
   // coin goal
   this.goal = this.physics.add.sprite(GAME_WIDTH / 2, 40, "coin");
   this.goal.setImmovable(true);
+  this.goal.setScale(0.5);
+
 
   // collisions
   this.physics.add.overlap(this.player, this.bears, () => {
@@ -107,6 +111,8 @@ function update() {
 function spawnBear(scene) {
   const laneY = Phaser.Math.Between(2, 8) * (LANE_HEIGHT / 1.0);
   const bear = scene.bears.create(-110, laneY, "bear");
+  bear.setScale(0.5);
+
 
   const baseSpeed = 140;
   const speed = baseSpeed + (currentLevel - 1) * 25;
