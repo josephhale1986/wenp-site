@@ -2,10 +2,18 @@ const GAME_WIDTH = 480;
 const GAME_HEIGHT = 640;
 const LANE_HEIGHT = 64;
 
+// GLOBAL STATE
 let score = 0;
 let currentLevel = 1;
-let coinsNeededThisLevel = 3;
+
+// we’ll do 1 coin per level now
+let coinsNeededThisLevel = 1;
 let coinsCollectedThisLevel = 0;
+
+// sprite scales (tune here)
+const PLAYER_SCALE = 0.16;
+const BEAR_SCALE = 0.16;
+const COIN_SCALE = 0.16;
 
 const config = {
   type: Phaser.AUTO,
@@ -23,7 +31,8 @@ const config = {
 const game = new Phaser.Game(config);
 
 function preload() {
-  this.load.image("frog", "assets/frog.png");   // use transparent ones
+  // use the transparent ones you uploaded
+  this.load.image("frog", "assets/frog.png");
   this.load.image("bear", "assets/bear.png");
   this.load.image("coin", "assets/pcoin.png");
 }
@@ -31,7 +40,7 @@ function preload() {
 function create() {
   const scene = this;
 
-  // background stripes
+  // background lanes
   for (let i = 0; i < GAME_HEIGHT / LANE_HEIGHT; i++) {
     const color = i % 2 === 0 ? 0x0f172a : 0x111827;
     const rect = this.add.rectangle(
@@ -47,24 +56,28 @@ function create() {
   // HUD
   this.scoreText = this.add.text(12, 12, "Score: 0", { fontSize: "18px", fill: "#fff" });
   this.levelText = this.add.text(180, 12, "Level: 1", { fontSize: "18px", fill: "#facc15" });
-  this.coinsText = this.add.text(300, 12, "Coins: 0/3", { fontSize: "18px", fill: "#fff" });
+  this.coinsText = this.add.text(300, 12, "Coins: 0/1", { fontSize: "18px", fill: "#fff" });
 
   // 🐸 player
   this.player = this.physics.add.sprite(GAME_WIDTH / 2, GAME_HEIGHT - 80, "frog");
-  this.player.setScale(0.25);
+  this.player.setScale(PLAYER_SCALE);
   this.player.setCollideWorldBounds(true);
   this.player.setDepth(2);
 
-  // IMPORTANT: resize physics body to match scaled sprite
-  this.player.body.setSize(this.player.displayWidth, this.player.displayHeight, true);
+  // shrink hitbox to match scaled sprite (and a bit tighter)
+  this.player.body.setSize(
+    this.player.displayWidth * 0.75,
+    this.player.displayHeight * 0.75,
+    true
+  );
 
-  // flag to prevent instant re-hit
+  // prevent repeated hits
   this.player.isHit = false;
 
   // controls
   this.cursors = this.input.keyboard.createCursorKeys();
 
-  // bears
+  // 🐻 bears group
   this.bears = this.physics.add.group();
 
   this.bearTimer = this.time.addEvent({
@@ -73,12 +86,16 @@ function create() {
     callback: () => spawnBear(scene)
   });
 
-  // coin
-  this.goal = this.physics.add.sprite(GAME_WIDTH / 2, 90, "coin");
-  this.goal.setScale(0.25);
+  // 🪙 coin / goal (a bit lower and smaller)
+  this.goal = this.physics.add.sprite(GAME_WIDTH / 2, 95, "coin");
+  this.goal.setScale(COIN_SCALE);
   this.goal.setImmovable(true);
   this.goal.setDepth(1);
-  this.goal.body.setSize(this.goal.displayWidth, this.goal.displayHeight, true);
+  this.goal.body.setSize(
+    this.goal.displayWidth * 0.85,
+    this.goal.displayHeight * 0.85,
+    true
+  );
 
   // collisions
   this.physics.add.overlap(this.player, this.bears, () => {
@@ -91,9 +108,9 @@ function create() {
 }
 
 function update() {
-  if (!this.cursors || this.player.isHit) return; // no movement while hit
+  if (!this.cursors || this.player.isHit) return;
 
-  const hop = LANE_HEIGHT / 2;
+  const hop = LANE_HEIGHT / 2; // 32px
 
   if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
     this.player.y -= hop;
@@ -105,7 +122,7 @@ function update() {
     this.player.x += hop;
   }
 
-  // cleanup
+  // cleanup bears
   this.bears.children.iterate((bear) => {
     if (bear && bear.x > GAME_WIDTH + 140) {
       bear.destroy();
@@ -116,16 +133,21 @@ function update() {
 /* ---------------- helpers ---------------- */
 
 function spawnBear(scene) {
+  // don’t spawn in top 2 lanes so they don’t sit on the coin
   const laneMin = 3;
-  const laneMax = 8;
+  const laneMax = 9;
   const laneY = Phaser.Math.Between(laneMin, laneMax) * (LANE_HEIGHT / 1.0);
 
   const bear = scene.bears.create(-140, laneY, "bear");
-  bear.setScale(0.25);
+  bear.setScale(BEAR_SCALE);
   bear.setDepth(1);
 
-  // resize body for scaled sprite
-  bear.body.setSize(bear.displayWidth, bear.displayHeight, true);
+  // shrink hitbox too
+  bear.body.setSize(
+    bear.displayWidth * 0.75,
+    bear.displayHeight * 0.75,
+    true
+  );
 
   const baseSpeed = 140;
   const speed = baseSpeed + (currentLevel - 1) * 25;
@@ -138,20 +160,19 @@ function resetPlayer(scene) {
 }
 
 function handlePlayerHit(scene) {
-  if (scene.player.isHit) return; // already processing a hit
+  if (scene.player.isHit) return;
   scene.player.isHit = true;
 
   // little flash
   scene.tweens.add({
     targets: scene.player,
-    alpha: 0.2,
+    alpha: 0.25,
     yoyo: true,
     repeat: 3,
-    duration: 120
+    duration: 100
   });
 
-  // reset position after short delay
-  scene.time.delayedCall(500, () => {
+  scene.time.delayedCall(450, () => {
     resetPlayer(scene);
     scene.player.isHit = false;
     scene.player.setAlpha(1);
@@ -159,6 +180,7 @@ function handlePlayerHit(scene) {
 }
 
 function handleCoinCollected(scene) {
+  // +10 pts per coin
   score += 10;
   coinsCollectedThisLevel += 1;
 
@@ -167,6 +189,7 @@ function handleCoinCollected(scene) {
 
   resetPlayer(scene);
 
+  // ✅ now we level up every single coin
   if (coinsCollectedThisLevel >= coinsNeededThisLevel) {
     levelUp(scene);
   }
@@ -175,11 +198,14 @@ function handleCoinCollected(scene) {
 function levelUp(scene) {
   currentLevel += 1;
   coinsCollectedThisLevel = 0;
-  coinsNeededThisLevel = Math.min(6, 3 + currentLevel - 1);
+
+  // keep it 1 coin per level
+  coinsNeededThisLevel = 1;
 
   scene.levelText.setText("Level: " + currentLevel);
-  scene.coinsText.setText("Coins: 0/" + coinsNeededThisLevel);
+  scene.coinsText.setText("Coins: 0/1");
 
+  // faster bears as we level
   if (scene.bearTimer) scene.bearTimer.remove(false);
   scene.bearTimer = scene.time.addEvent({
     delay: getBearSpawnDelay(),
@@ -187,17 +213,22 @@ function levelUp(scene) {
     callback: () => spawnBear(scene)
   });
 
+  // popup
   const msg = scene.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2, "LEVEL UP!", {
-    fontSize: "28px",
+    fontSize: "26px",
     fill: "#22c55e"
   }).setOrigin(0.5).setDepth(10).setStroke("#000", 4);
 
   scene.tweens.add({
     targets: msg,
     alpha: 0,
-    duration: 1200,
+    duration: 1100,
     onComplete: () => msg.destroy()
   });
+
+  // later:
+  // const wallet = window.currentWallet || "PEP_DEMO_WALLET_ADDRESS";
+  // sendWENPReward(wallet, 1);
 }
 
 function getBearSpawnDelay() {
@@ -206,7 +237,7 @@ function getBearSpawnDelay() {
   return Math.max(450, base - faster);
 }
 
-// keep for later backend reward
+// kept for future API
 async function sendWENPReward(wallet, amount) {
   try {
     await fetch("/api/wenp/reward", {
@@ -218,3 +249,8 @@ async function sendWENPReward(wallet, amount) {
     console.error(err);
   }
 }
+
+
+
+
+ 
