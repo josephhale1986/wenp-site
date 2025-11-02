@@ -87,14 +87,14 @@ function create() {
   });
 
   // 🪙 coin / goal (a bit lower and smaller)
-  this.goal = this.physics.add.sprite(GAME_WIDTH / 2, 95, "coin");
-  this.goal.setScale(COIN_SCALE);
-  this.goal.setImmovable(true);
-  this.goal.setDepth(1);
-  this.goal.body.setSize(
-    this.goal.displayWidth * 0.85,
-    this.goal.displayHeight * 0.85,
-    true
+  his.goal = this.physics.add.sprite(GAME_WIDTH / 2, 95, "coin");
+this.goal.setScale(COIN_SCALE);
+this.goal.setImmovable(true);
+this.goal.setDepth(1);
+this.goal.body.setSize(
+  this.goal.displayWidth * 1.05,
+  this.goal.displayHeight * 1.05,
+  true
   );
 
   // collisions
@@ -133,21 +133,16 @@ function update() {
 /* ---------------- helpers ---------------- */
 
 function spawnBear(scene) {
-  // don’t spawn in top 2 lanes so they don’t sit on the coin
   const laneMin = 3;
   const laneMax = 9;
   const laneY = Phaser.Math.Between(laneMin, laneMax) * (LANE_HEIGHT / 1.0);
 
-  const bear = scene.bears.create(-140, laneY, "bear");
+  const startOffset = Phaser.Math.Between(0, 140);
+
+  const bear = scene.bears.create(-140 - startOffset, laneY, "bear");
   bear.setScale(BEAR_SCALE);
   bear.setDepth(1);
-
-  // shrink hitbox too
-  bear.body.setSize(
-    bear.displayWidth * 0.75,
-    bear.displayHeight * 0.75,
-    true
-  );
+  bear.body.setSize(bear.displayWidth * 0.75, bear.displayHeight * 0.75, true);
 
   const baseSpeed = 140;
   const speed = baseSpeed + (currentLevel - 1) * 25;
@@ -232,9 +227,9 @@ function levelUp(scene) {
 }
 
 function getBearSpawnDelay() {
-  const base = 1200;
-  const faster = (currentLevel - 1) * 90;
-  return Math.max(450, base - faster);
+  const base = 1600;
+  const faster = (currentLevel - 1) * 70;
+  return Math.max(700, base - faster);
 }
 
 // kept for future API
