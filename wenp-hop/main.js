@@ -23,7 +23,6 @@ const config = {
 const game = new Phaser.Game(config);
 
 function preload() {
-  // these must exist in /wenp-hop/assets/ on GitHub
   this.load.image("frog", "assets/frog.png");
   this.load.image("bear", "assets/bear.png");
   this.load.image("coin", "assets/pcoin.png");
@@ -32,7 +31,7 @@ function preload() {
 function create() {
   const scene = this;
 
-  // draw lane rows
+  // background stripes
   for (let i = 0; i < GAME_HEIGHT / LANE_HEIGHT; i++) {
     const color = i % 2 === 0 ? 0x0f172a : 0x111827;
     const rect = this.add.rectangle(
@@ -50,30 +49,30 @@ function create() {
   this.levelText = this.add.text(180, 12, "Level: 1", { fontSize: "18px", fill: "#facc15" });
   this.coinsText = this.add.text(300, 12, "Coins: 0/3", { fontSize: "18px", fill: "#fff" });
 
-  // player
-  this.player = this.physics.add.sprite(GAME_WIDTH / 2, GAME_HEIGHT - 48, "frog");
-this.player.setCollideWorldBounds(true);
-this.player.setScale(0.5);
-
+  // 🐸 player (smaller + slightly higher)
+  this.player = this.physics.add.sprite(GAME_WIDTH / 2, GAME_HEIGHT - 80, "frog");
+  this.player.setCollideWorldBounds(true);
+  this.player.setScale(0.25);            // 25% of original
+  this.player.setDepth(2);
 
   // controls
   this.cursors = this.input.keyboard.createCursorKeys();
 
-  // bears group
+  // 🐻 bears group
   this.bears = this.physics.add.group();
 
-  // bear spawner
+  // spawn bears on timer
   this.bearTimer = this.time.addEvent({
     delay: getBearSpawnDelay(),
     loop: true,
     callback: () => spawnBear(scene)
   });
 
-  // coin goal
-  this.goal = this.physics.add.sprite(GAME_WIDTH / 2, 40, "coin");
+  // 🪙 coin / goal (smaller + lower)
+  this.goal = this.physics.add.sprite(GAME_WIDTH / 2, 90, "coin");
+  this.goal.setScale(0.25);
   this.goal.setImmovable(true);
-  this.goal.setScale(0.5);
-
+  this.goal.setDepth(1);
 
   // collisions
   this.physics.add.overlap(this.player, this.bears, () => {
@@ -88,31 +87,38 @@ this.player.setScale(0.5);
 function update() {
   if (!this.cursors) return;
 
+  // movement is in "hops"
+  const hop = LANE_HEIGHT / 2;
+
   if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
-    this.player.y -= LANE_HEIGHT / 2;
+    this.player.y -= hop;
   } else if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
-    this.player.y += LANE_HEIGHT / 2;
+    this.player.y += hop;
   } else if (Phaser.Input.Keyboard.JustDown(this.cursors.left)) {
-    this.player.x -= LANE_HEIGHT / 2;
+    this.player.x -= hop;
   } else if (Phaser.Input.Keyboard.JustDown(this.cursors.right)) {
-    this.player.x += LANE_HEIGHT / 2;
+    this.player.x += hop;
   }
 
-  // clean up bears
+  // cleanup bears
   this.bears.children.iterate((bear) => {
-    if (bear && bear.x > GAME_WIDTH + 120) {
+    if (bear && bear.x > GAME_WIDTH + 140) {
       bear.destroy();
     }
   });
 }
 
-/* ---------- helpers ---------- */
+/* ----------------- helpers ----------------- */
 
 function spawnBear(scene) {
-  const laneY = Phaser.Math.Between(2, 8) * (LANE_HEIGHT / 1.0);
-  const bear = scene.bears.create(-110, laneY, "bear");
-  bear.setScale(0.5);
+  // avoid top (where coin is) and bottom (where frog spawns)
+  const laneMin = 3;  // skip lanes 0,1,2 (top area)
+  const laneMax = 8;
+  const laneY = Phaser.Math.Between(laneMin, laneMax) * (LANE_HEIGHT / 1.0);
 
+  const bear = scene.bears.create(-140, laneY, "bear");
+  bear.setScale(0.25);
+  bear.setDepth(1);
 
   const baseSpeed = 140;
   const speed = baseSpeed + (currentLevel - 1) * 25;
@@ -121,7 +127,7 @@ function spawnBear(scene) {
 }
 
 function resetPlayer(scene) {
-  scene.player.setPosition(GAME_WIDTH / 2, GAME_HEIGHT - 48);
+  scene.player.setPosition(GAME_WIDTH / 2, GAME_HEIGHT - 80);
 }
 
 function handleCoinCollected(scene) {
@@ -146,7 +152,7 @@ function levelUp(scene) {
   scene.levelText.setText("Level: " + currentLevel);
   scene.coinsText.setText("Coins: 0/" + coinsNeededThisLevel);
 
-  // faster spawns
+  // tighter spawns
   if (scene.bearTimer) scene.bearTimer.remove(false);
   scene.bearTimer = scene.time.addEvent({
     delay: getBearSpawnDelay(),
@@ -156,7 +162,7 @@ function levelUp(scene) {
 
   // popup
   const msg = scene.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2, "LEVEL UP!", {
-    fontSize: "32px",
+    fontSize: "28px",
     fill: "#22c55e"
   }).setOrigin(0.5).setDepth(10).setStroke("#000", 4);
 
@@ -167,8 +173,8 @@ function levelUp(scene) {
     onComplete: () => msg.destroy()
   });
 
-  // 1 WENP per level – keep for later API
-  const walletAddress = window.currentWallet || "PEP_DEMO_WALLET_ADDRESS";
+  // call backend later if needed:
+  // const walletAddress = window.currentWallet || "PEP_DEMO_WALLET_ADDRESS";
   // sendWENPReward(walletAddress, 1);
 }
 
@@ -178,6 +184,7 @@ function getBearSpawnDelay() {
   return Math.max(450, base - faster);
 }
 
+// backend reward (kept for later)
 async function sendWENPReward(wallet, amount) {
   try {
     const res = await fetch("/api/wenp/reward", {
